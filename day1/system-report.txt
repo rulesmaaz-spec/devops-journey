@@ -1,0 +1,17 @@
+================================
+SYSTEM EXPLORATION REPORT
+================================
+Date: $date
+Distro: cat /etc/os-release
+Kernel: uname -r
+Home Directory: $HOME
+Shell: $SHELL
+
+SKILLS DEMONSTRATED:
+- Navigation: cd, pwd, ls
+- File creation: touch, echo, mkdir
+- File reading: cat, less, head
+- Permissions: chmod
+- Search: find, grep
+- Help: man, whatis, --help
+================================
