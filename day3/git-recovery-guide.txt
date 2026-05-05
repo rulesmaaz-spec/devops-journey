@@ -1,0 +1,23 @@
+====================================================================
+                 GIT DISASTER RECOVERY QUICK GUIDE
+====================================================================
+
+| Situation | Command |
+| Unstag a file | git restore --staged <file_name> |
+| Discard change to a file | git restore <file_name> |
+| Fix last commit message | git commit --amend -m "New Message" |
+| Undo last commit (keep changes) | git reset HEAD~1 |
+| undo last commit (discart chnages) | git reset --hard HEAD~1 |
+| Save work temporarily | git stash |
+| Bring back saved work | git stash pop | 
+| See all branches | git branch -a |
+| See commit history | git log --oneline --graph --all |
+| Find who change a line | git blame <file_name> |
+
+GOLDEN RULES:
+1.Pull before push
+2. Commit often (small, focused commit)
+3. Write meaningfull commit message
+4. Never force to push main/maste
+5. When in doubt, create a branch
+======================================================================
