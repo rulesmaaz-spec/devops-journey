@@ -1,1 +1,5 @@
+HEAD
 Diffrent version on master 
+
+Version for feature branch 
+feature-branch
