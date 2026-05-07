@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "========== Basic while loop =========="
+counter=1
+while [ "$counter" -le 5 ]; do
+    echo "Iteration: $counter"
+    ((counter++))  # Increment counter
+done
+
+echo "\n========== Reading a file line by line =========="
+# Sample file
+cat > servers.txt << 'EOF'
+web-server-01
+web-server-02
+db-server-01
+cache-server-01
+EOF
+
+while IFS= read -r server; do
+      [[ -z "$server" || "$server" =~]]

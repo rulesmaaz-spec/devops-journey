@@ -1,0 +1,92 @@
+==============================
+             SYSTEM HEALTH CHECK REPORT
+==============================
+Generated: Thu May  7 11:16:19 PM IST 2026
+Hostname: mohammad
+Kernel: 6.17.0-23-generic
+Uptime: up 4 hours, 56 minutes
+
+==============================
+             CPU USAGE
+==============================
+Current CPU Usage: 0.6%
+CPU Usage is within limit
+
+==============================
+             MEMORY USAGE
+==============================
+Total Memory: 7.5Gi
+Used Memory: 2.9Gi
+Free Memory: 2.3Gi
+Usage: 38.2%
+Memory usage is within limit
+
+==============================
+             DISK USAGE
+==============================
+  Mount: / (/dev/nvme0n1p2)
+  Size: 233G, Used: 19G, Available: 203G
+  Disk usage is within limit
+
+  Mount: /sys/firmware/efi/efivars (efivarfs)
+  Size: 384K, Used: 89K, Available: 291K
+  Disk usage is within limit
+
+  Mount: /boot/efi (/dev/nvme0n1p1)
+  Size: 1.1G, Used: 6.2M, Available: 1.1G
+  Disk usage is within limit
+
+==============================
+             TOP 5 PROCESSES BY CPU
+==============================
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 10529) - CPU: 14.3%, MEM: 9.1%
+  /usr/bin/gnome-shell (PID: 9800) - CPU: 8.2%, MEM: 3.7%
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 11277) - CPU: 1.9%, MEM: 3.1%
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 11274) - CPU: 1.5%, MEM: 2.7%
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 10750) - CPU: 1.0%, MEM: 1.4%
+
+==============================
+             TOP 5 PROCESSES BY MEMORY
+==============================
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 10529) - CPU: 14.3%, MEM: 9.1%
+  /usr/sbin/mysqld (PID: 1389) - CPU: 0.7%, MEM: 5.0%
+  /usr/bin/gnome-shell (PID: 9800) - CPU: 8.2%, MEM: 3.7%
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 11277) - CPU: 1.9%, MEM: 3.1%
+  /snap/firefox/8247/usr/lib/firefox/firefox (PID: 11274) - CPU: 1.5%, MEM: 2.7%
+
+==============================
+             CRITICAL SERVICE STATUS
+==============================
+  sshd: NOT running
+  systemd-journald: Running
+  systemd-resolved: Running
+
+==============================
+             NETWORK CONNECTIVITY
+==============================
+Internet Connectivity: OK
+DNS Resolution: OK
+
+==============================
+             VERBOSE SYSTEM INFO
+==============================
+CPU Info:
+                                Intel(R) Core(TM) i5-8365U CPU @ 1.60GHz
+
+Network Interfaces:
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eno2             DOWN           
+wwan0            DOWN           
+wlo1             UP             192.168.1.39/24 fe80::6cf4:7f2e:2b58:cb1b/64 
+docker0          DOWN           172.17.0.1/16 
+
+Recent Auth Log (last 5):
+2026-05-07T23:05:01.227415+05:30 mohammad CRON[16677]: pam_unix(cron:session): session closed for user root
+2026-05-07T23:09:01.239677+05:30 mohammad CRON[16763]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-05-07T23:09:01.244918+05:30 mohammad CRON[16763]: pam_unix(cron:session): session closed for user root
+2026-05-07T23:15:01.257613+05:30 mohammad CRON[17088]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-05-07T23:15:01.265091+05:30 mohammad CRON[17088]: pam_unix(cron:session): session closed for user root
+==============================
+             REPORT COMPLETE
+==============================
+Report saved to: /home/mohammad/devops-journey/day4/logs/health_report-20260507-231619.txt
