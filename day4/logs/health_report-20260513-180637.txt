@@ -1,0 +1,73 @@
+==============================
+             SYSTEM HEALTH CHECK REPORT
+==============================
+Generated: Wed May 13 06:06:37 PM IST 2026
+Hostname: mohammad
+Kernel: 6.17.0-23-generic
+Uptime: up 1 hour, 27 minutes
+
+==============================
+             CPU USAGE
+==============================
+Current CPU Usage: 1.2%
+CPU Usage is within limit
+
+==============================
+             MEMORY USAGE
+==============================
+Total Memory: 7.5Gi
+Used Memory: 2.8Gi
+Free Memory: 2.8Gi
+Usage: 37.3%
+Memory usage is within limit
+
+==============================
+             DISK USAGE
+==============================
+  Mount: / (/dev/nvme0n1p2)
+  Size: 233G, Used: 19G, Available: 203G
+  Disk usage is within limit
+
+  Mount: /sys/firmware/efi/efivars (efivarfs)
+  Size: 384K, Used: 89K, Available: 291K
+  Disk usage is within limit
+
+  Mount: /boot/efi (/dev/nvme0n1p1)
+  Size: 1.1G, Used: 6.2M, Available: 1.1G
+  Disk usage is within limit
+
+==============================
+             TOP 5 PROCESSES BY CPU
+==============================
+  ps (PID: 8932) - CPU: 400%, MEM: 0.0%
+  /snap/firefox/8274/usr/lib/firefox/firefox (PID: 6207) - CPU: 9.2%, MEM: 7.4%
+  /usr/bin/gnome-shell (PID: 2585) - CPU: 7.7%, MEM: 3.6%
+  /snap/firefox/8274/usr/lib/firefox/firefox (PID: 6865) - CPU: 4.0%, MEM: 3.3%
+  /snap/firefox/8274/usr/lib/firefox/firefox (PID: 6910) - CPU: 2.9%, MEM: 3.0%
+
+==============================
+             TOP 5 PROCESSES BY MEMORY
+==============================
+  /snap/firefox/8274/usr/lib/firefox/firefox (PID: 6207) - CPU: 9.2%, MEM: 7.4%
+  /usr/sbin/mysqld (PID: 1386) - CPU: 0.6%, MEM: 5.0%
+  /usr/bin/gnome-shell (PID: 2585) - CPU: 7.7%, MEM: 3.6%
+  /snap/firefox/8274/usr/lib/firefox/firefox (PID: 6865) - CPU: 4.0%, MEM: 3.3%
+  /snap/firefox/8274/usr/lib/firefox/firefox (PID: 6910) - CPU: 2.9%, MEM: 3.0%
+
+==============================
+             CRITICAL SERVICE STATUS
+==============================
+  sshd: NOT running
+  systemd-journald: Running
+  systemd-resolved: Running
+
+==============================
+             NETWORK CONNECTIVITY
+==============================
+Internet Connectivity: OK
+DNS Resolution: OK
+
+==============================
+             REPORT COMPLETE
+==============================
+Report saved to: /home/mohammad/devops-journey/day4/logs/health_report-20260513-180637.txt
