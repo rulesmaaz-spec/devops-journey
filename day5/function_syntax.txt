@@ -1,0 +1,15 @@
+#====================================== Method 1: Standard (RECOMMENDED) =======================================
+
+function_name() {
+        #code
+}
+
+#====================================== Method 2: With 'function' keyword ======================================
+
+function function_name() {
+            #code
+}
+
+# =================================== Method 3: One-liner (for very short function) ============================
+
+short_func() { echo "Hello" }

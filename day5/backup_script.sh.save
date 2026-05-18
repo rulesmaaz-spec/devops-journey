@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Scripts: backup_script.sh
+# Description: Production grade directory backup with rotation
+# Author: Mohammad Maaz
+# Date: 2026-05-11
+# Cron: 0 2 * * * /home/mohammad/devops-journey/day5/backup_script.sh
+#
+
+set -euo pipefail
+
+#==================================
+#       CONFIGRATION
+#==================================
+SOURCE_DIR=${1:-$HOME/devops-journey}    # What to backup
+BACKUP_DIR="$HOME/backups"               # Where to store backup
+LOG_FILE="$BACKUP_DIR/backup.log"        # Log file
+RETENTION_DAYS=7                         # Keep backup for 7 days
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+BACKUP_FILE="$BACKUP_DIR/backup-$TIMESTAMP.tar.gz"
+
+# Colors for logging
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+#=================================
+#         FUNCTION
+#=================================
+
+log() {
+     local level
+} 
