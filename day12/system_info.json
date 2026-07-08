@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-07-08T17:54:07.015848",
+  "memory": {
+    "total": "7.5 GB",
+    "used": "4.5 GB",
+    "available": "2.6 GB",
+    "percent": "65.7%"
+  },
+  "disk": {
+    "mount": "/",
+    "total": "232.6 GB",
+    "used": "22.0 GB",
+    "free": "198.8 GB",
+    "percent": "10.0%"
+  },
+  "network": {
+    "hostname": "mohammad",
+    "ip": "10.211.149.69"
+  },
+  "cpu_percent": 5.6
+}
