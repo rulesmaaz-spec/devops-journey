@@ -1,0 +1,6 @@
+FROM python:3.11-alpine 
+RUN adduser -D parser 
+WORKDIR /home/parser
+
+COPY --chown=parser:parser log_parser.py .
+ENTRYPOINT ["python3", "log_parser.py"]
