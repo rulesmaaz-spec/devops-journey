@@ -1,0 +1,10 @@
+services:
+  web:
+    image: rulesmaaz/flask-redis-app:1.0
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
+
