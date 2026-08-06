@@ -1,11 +1,11 @@
-# 🐳 Task Manager — Dockerized 3-Tier Application
+#  Task Manager — Dockerized 3-Tier Application
 
-> **Portfolio Piece #1** — Month 1 Capstone of my 90-day DevOps transformation journey  
+> **Portfolio Piece #1** — 1st Capstone of my DevOps  journey  
 > A production-ready, fully containerized task management REST API
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
                     ┌─────────────────────────────────┐
@@ -23,35 +23,35 @@
                     │    │  ┌────▼──┐ ┌──▼────┐ │      │
                     │    │  │Redis │ │Postgres│ │      │
                     │    │  │cache │ │database│ │      │
-                    │    │  │vol ✅│ │ vol ✅ │ │      │
+                    │    │  │vol   │ │ vol    │ │      │
                     │    │  └──────┘ └────────┘ │      │
                     │    └──────────────────────┘      │
                     └─────────────────────────────────┘
 ```
 
-| Service | Image | Role | Port |
-|---------|-------|------|------|
-| **web** | `python:3.11-slim` (multi-stage) | REST API | 5000 |
-| **redis** | `redis:7-alpine` | Page view cache | internal |
-| **db** | `postgres:16-alpine` | Persistent task storage | internal |
+| Service   | Image                            | Role                   | Port      |
+|-----------|----------------------------------|------------------------|-----------|
+| **web**   | `python:3.11-slim` (multi-stage) | REST API                | 5000     |
+| **redis** | `redis:7-alpine`                 | Page view cache         | internal |
+| **db**    | `postgres:16-alpine`             | Persistent task storage | internal |
 
 ---
 
-## ✨ Features
+##  Features
 
-- ✅ **Multi-stage Dockerfile** — build image 1GB → runtime image ~57MB
-- ✅ **Non-root user** — runs as `appuser`, not root (production security)
-- ✅ **Healthchecks** on all 3 services — auto-restart on failure
-- ✅ **Persistent volumes** — Redis + PostgreSQL data survives restarts
-- ✅ **Custom bridge network** — database isolated, not exposed to host
-- ✅ **Environment variables** — zero hardcoded secrets
-- ✅ **depends_on with service_healthy** — Flask waits for DB + Redis to be truly ready
-- ✅ **`.dockerignore`** — clean build context, no secrets in image
-- ✅ **REST API** — full CRUD for tasks
+-> **Multi-stage Dockerfile** — build image 1GB → runtime image ~57MB
+-> **Non-root user** — runs as `appuser`, not root (production security)
+-> **Healthchecks** on all 3 services — auto-restart on failure
+-> **Persistent volumes** — Redis + PostgreSQL data survives restarts
+-> **Custom bridge network** — database isolated, not exposed to host
+-> **Environment variables** — zero hardcoded secrets
+-> **depends_on with service_healthy** — Flask waits for DB + Redis to be truly ready
+-> **`.dockerignore`** — clean build context, no secrets in image
+-> **REST API** — full CRUD for tasks
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -78,7 +78,7 @@ The API is live at **http://localhost:5000**
 
 ---
 
-## 📡 API Endpoints
+##  API Endpoints
 
 ### `GET /`
 Welcome message with live Redis hit counter
@@ -146,7 +146,7 @@ curl -X POST http://localhost:5000/tasks \
 
 ---
 
-## 🐳 Docker Commands
+##  Docker Commands
 
 ```bash
 # See all running containers + health status
@@ -183,7 +183,7 @@ taskmanager-docker/
 ├── Dockerfile             # Multi-stage production Dockerfile
 ├── docker-compose.yml     # Orchestrates all 3 services
 ├── .env.example           # Template for environment variables
-├── .env                   # Your secrets (git-ignored ✅)
+├── .env                   # Your secrets (git-ignored )
 ├── .dockerignore          # Excludes secrets from build context
 ├── .gitignore             # Excludes .env from commits
 └── README.md              # This file
@@ -191,7 +191,7 @@ taskmanager-docker/
 
 ---
 
-## 🔒 Security Practices Applied
+##  Security Practices Applied
 
 | Practice | Implementation |
 |----------|---------------|
@@ -204,13 +204,13 @@ taskmanager-docker/
 
 ---
 
-## 📊 Image Size Comparison
+##  Image Size Comparison
 
-| Stage | Size | Notes |
-|-------|------|-------|
-| `python:3.11` (default) | ~1 GB | Full Python install |
-| Builder stage | ~214 MB | With gcc + build tools |
-| **Final runtime image** | **~57 MB** | **94% smaller** |
+| Stage                   | Size       | Notes                  |
+|-------------------------|------------|------------------------|
+| `python:3.11` (default) | ~1 GB      | Full Python install    |
+| Builder stage           | ~214 MB    | With gcc + build tools |
+| **Final runtime image** | **~57 MB** | **94% smaller**        |
 
 ---
 
@@ -224,7 +224,7 @@ taskmanager-docker/
 
 ---
 
-## 📚 What I Learned Building This
+##  What I Learned Building This
 
 | Concept | Applied in |
 |---------|-----------|
@@ -239,24 +239,18 @@ taskmanager-docker/
 
 ---
 
-## 🗺️ Part of 90-Day DevOps Journey
+##  Part of DevOps Journey
 
-This is **Portfolio Piece #1** of 8 projects I am building over 90 days to become a Gulf-remote-ready DevOps engineer.
+This is **Portfolio Piece #1** of projects  which I am building to become DevSecOps engineer.
 
-| Month | Focus | Portfolio pieces |
-|-------|-------|-----------------|
-| **Month 1 ✅** | Linux · Docker · Python · Bash | Piece #1 (this project) |
-| Month 2 | AWS · Terraform · CI/CD | Pieces #2–5 |
-| Month 3 | Ansible · Kubernetes · Capstone | Pieces #6–8 |
 
-Follow my journey on LinkedIn → [linkedin.com/in/yourusername](https://linkedin.com/in/yourusername)
-
+Follow my journey on LinkedIn → www.linkedin.com/in/mohammad-maaz-805880402
 ---
 
-## 📄 License
+##  License
 
 MIT License — free to use, modify, and distribute.
 
 ---
 
-*Built with 🐳 Docker · Part of #90DaysOfDevOps*
+*Built with Docker · Part of #DevOps_Journey*
