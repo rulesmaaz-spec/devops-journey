@@ -39,15 +39,25 @@
 
 ##  Features
 
+
 -> **Multi-stage Dockerfile** — build image 1GB → runtime image ~57MB
+
 -> **Non-root user** — runs as `appuser`, not root (production security)
+
 -> **Healthchecks** on all 3 services — auto-restart on failure
+
 -> **Persistent volumes** — Redis + PostgreSQL data survives restarts
+
 -> **Custom bridge network** — database isolated, not exposed to host
+
 -> **Environment variables** — zero hardcoded secrets
+
 -> **depends_on with service_healthy** — Flask waits for DB + Redis to be truly ready
+
 -> **`.dockerignore`** — clean build context, no secrets in image
+
 -> **REST API** — full CRUD for tasks
+
 
 ---
 
