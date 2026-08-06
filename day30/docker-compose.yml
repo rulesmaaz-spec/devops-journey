@@ -1,0 +1,59 @@
+services:
+  web:
+    build: .
+    image: rulesmaaz/taskmanager:1.0
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_HOST=redis
+      - DB_HOST=db
+      - DB_NAME=tasks
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: tasks
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+  pg-data:
+
+networks:
+  backend:
+    driver: bridge
