@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    image: rulesmaaz/taskmanager:1.0
+    image: mohammad1maaz/taskmanager:1.0
     ports:
       - "5000:5000"
     environment:
@@ -16,7 +16,8 @@ services:
       db:
         condition: service_healthy
     networks:
-      - backend
+      - frontend
+      - backend # web can talk to both
     restart: unless-stopped
 
   redis:
@@ -30,7 +31,7 @@ services:
       timeout: 3s
       retries: 3
     networks:
-      - backend
+      - backend # redis only on backend
     restart: unless-stopped
 
   db:
@@ -47,7 +48,7 @@ services:
       timeout: 3s
       retries: 3
     networks:
-      - backend
+      - backend # database only on backend
     restart: unless-stopped
 
 volumes:
@@ -55,5 +56,7 @@ volumes:
   pg-data:
 
 networks:
+  frontend:
+    driver: bridge
   backend:
     driver: bridge
