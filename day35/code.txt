@@ -1,0 +1,745 @@
+mohammad@mohammad:~$ aws configure
+AWS Access Key ID [****************JJGO]: 
+AWS Secret Access Key [****************+Md7]: 
+Default region name [ap-south-1]: 
+Default output format [json]: 
+mohammad@mohammad:~$ aws ec2 create-vpc \
+>   --cidr-block 10.0.0.0/16 \
+>   --tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=devops-vpc}]' \
+>   --region ap-south-1
+{
+    "Vpc": {
+        "OwnerId": "908252070469",
+        "InstanceTenancy": "default",
+        "Ipv6CidrBlockAssociationSet": [],
+        "CidrBlockAssociationSet": [
+            {
+                "AssociationId": "vpc-cidr-assoc-01b4f17e0ebcaa21e",
+                "CidrBlock": "10.0.0.0/16",
+                "CidrBlockState": {
+                    "State": "associated"
+                }
+            }
+        ],
+        "IsDefault": false,
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "devops-vpc"
+            }
+        ],
+        "VpcId": "vpc-002de9774c3611ba0",
+        "State": "pending",
+        "CidrBlock": "10.0.0.0/16",
+        "DhcpOptionsId": "dopt-02c9a29994be9e011"
+    }
+}
+(END)
+        "Ipv6CidrBlockAssociationSet": [],
+        "CidrBlockAssociationSet": [
+            {
+                "AssociationId": "vpc-cidr-assoc-01b4f17e0ebcaa21e",
+                "CidrBlock": "10.0.0.0/16",
+                "CidrBlockState": {
+                    "State": "associated"
+                }
+            }
+        ],
+        "IsDefault": false,
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "devops-vpc"
+            }
+        ],
+        "VpcId": "vpc-002de9774c3611ba0",
+        "State": "pending",
+        "CidrBlock": "10.0.0.0/16",
+        "DhcpOptionsId": "dopt-02c9a29994be9e011"
+    }
+}
+(END)
+     
+mohammad@mohammad:~$ VPC_ID="vpc-002de9774c3611ba0"    
+mohammad@mohammad:~$ aws ec2 modify-vpc-attribute \
+>   --vpc-id $VPC_ID \
+>   --enable-dns-hostnames '{"Value":true}'
+mohammad@mohammad:~$ aws ec2 create-subnet \
+>   --vpc-id $VPC_ID \
+>   --cidr-block 10.0.1.0/24 \
+>   --availability-zone ap-south-1a \
+>   --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=public-1a}]'
+{
+    "Subnet": {
+        "AvailabilityZoneId": "aps1-az1",
+        "MapCustomerOwnedIpOnLaunch": false,
+        "OwnerId": "908252070469",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": [],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "public-1a"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0dc445a7437cf1bbe",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0dc445a7437cf1bbe",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.1.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1a",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+            {
+                "Key": "Name",
+                "Value": "public-1a"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0dc445a7437cf1bbe",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0dc445a7437cf1bbe",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.1.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1a",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+ec2 create-subnet \~ 
+mohammad@mohammad:~$ aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block 10.0.1.0/24 \
+  --availability-zone ap-south-1a \
+  --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=private-1a}]'
+
+aws: [ERROR]: An error occurred (InvalidSubnet.Conflict) when calling the CreateSubnet operation: The CIDR '10.0.1.0/24' conflicts with another subnet
+mohammad@mohammad:~$ aws ec2 create-subnet \
+>   --vpc-id $VPC_ID \
+>   --cidr-block 10.0.2.0/24 \
+>   --availability-zone ap-south-1a \
+>   --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=private-1a}]'
+{
+    "Subnet": {
+        "AvailabilityZoneId": "aps1-az1",
+        "MapCustomerOwnedIpOnLaunch": false,
+        "OwnerId": "908252070469",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": [],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "private-1a"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0f346320235655b8c",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0f346320235655b8c",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.2.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1a",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+            {
+                "Key": "Name",
+                "Value": "private-1a"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0f346320235655b8c",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0f346320235655b8c",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.2.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1a",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+                             
+mohammad@mohammad:~$ aws ec2 create-subnet \
+>   --vpc-id $VPC_ID \
+>   --cidr-block 10.0.3.0/24 \
+>   --availability-zone me-south-1b \
+>                      
+mohammad@mohammad:~$ aws ec2 create-subnet \
+> >   --vpc-id $VPC_ID \
+
+
+aws: [ERROR]: An error occurred (ParamValidation): the following arguments are required: --vpc-id
+
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+mohammad@mohammad:~$ aws ec2 create-subnet \
+>   --vpc-id $VPC_ID \
+>   --cidr-block 10.0.3.0/24 \
+>   --availability-zone ap-south-1b \
+>   --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=public-1b}]'
+{
+    "Subnet": {
+        "AvailabilityZoneId": "aps1-az3",
+        "MapCustomerOwnedIpOnLaunch": false,
+        "OwnerId": "908252070469",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": [],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "public-1b"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0f9deb439798e2f31",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0f9deb439798e2f31",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.3.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1b",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+            {
+                "Key": "Name",
+                "Value": "public-1b"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0f9deb439798e2f31",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0f9deb439798e2f31",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.3.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1b",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+                             
+mohammad@mohammad:~$ aws ec2 create-subnet \
+>   --vpc-id $VPC_ID \
+>   --cidr-block 10.0.4.0/24 \
+>   --availability-zone ap-south-1b \
+>   --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=private-1b}]'
+{
+    "Subnet": {
+        "AvailabilityZoneId": "aps1-az3",
+        "MapCustomerOwnedIpOnLaunch": false,
+        "OwnerId": "908252070469",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": [],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "private-1b"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0fcbbdf2f192becb0",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0fcbbdf2f192becb0",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+        "CidrBlock": "10.0.4.0/24",
+        "AvailableIpAddressCount": 251,
+        "AvailabilityZone": "ap-south-1b",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false
+    }
+}
+(END)
+            {
+{
+    "Subnet": {
+        "AvailabilityZoneId": "aps1-az3",
+        "MapCustomerOwnedIpOnLaunch": false,
+        "OwnerId": "908252070469",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": [],
+        "Tags": [
+                "Key": "Name",
+                "Value": "private-1b"
+            }
+        ],
+        "SubnetArn": "arn:aws:ec2:ap-south-1:908252070469:subnet/subnet-0fcbbdf2f192becb0",
+        "EnableDns64": false,
+        "Ipv6Native": false,
+        "PrivateDnsNameOptionsOnLaunch": {
+            "HostnameType": "ip-name",
+            "EnableResourceNameDnsARecord": false,
+            "EnableResourceNameDnsAAAARecord": false
+        },
+        "SubnetId": "subnet-0fcbbdf2f192becb0",
+        "State": "available",
+        "VpcId": "vpc-002de9774c3611ba0",
+  
+mohammad@mohammad:~$ PRIVATE_1B="subnet-0fcbbdf2f192becb0"        
+mohammad@mohammad:~$ PUBLIC_1B="subnet-0f9deb439798e2f31"
+mohammad@mohammad:~$ PRIVATE_1A="subnet-0f346320235655b8c"
+mohammad@mohammad:~$ PUBLIC_1A="subnet-0dc445a7437cf1bbe"
+mohammad@mohammad:~$ aws ec2 create-internet-gateway \
+>   --tag-specifications 'ResourceType=internet-gateway,Tags=[{Key=Name,Value=devops-igw}]'
+{
+    "InternetGateway": {
+        "Attachments": [],
+        "InternetGatewayId": "igw-0daed874da2bb4a7e",
+        "OwnerId": "908252070469",
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "devops-igw"
+            }
+        ]
+    }
+}
+mohammad@mohammad:~$ IGW_ID="igw-0daed874da2bb4a7e"
+mohammad@mohammad:~$ aws ec2 attach-internet-gateway \
+>   --internet-gateway-id $IGW_ID \
+>   --vpc-id $VPC_ID
+mohammad@mohammad:~$ aws ec2 create-route-table \
+>   --vpc-id $VPC_ID \
+>   --tag-specifications 'ResourceType=route-table,Tags=[{Key=Name,Value=public-rt}]'
+{
+    "RouteTable": {
+        "Associations": [],
+        "PropagatingVgws": [],
+        "RouteTableId": "rtb-09791a6ac19499fb5",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "public-rt"
+            }
+        ],
+        "VpcId": "vpc-002de9774c3611ba0",
+        "OwnerId": "908252070469"
+    },
+    "ClientToken": "d394355a-cff3-47f7-b6f2-8baed0d406d4"
+}
+(END)
+    "RouteTable": {
+{
+        "Associations": [],
+        "PropagatingVgws": [],
+        "RouteTableId": "rtb-09791a6ac19499fb5",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "public-rt"
+            }
+        ],
+        "VpcId": "vpc-002de9774c3611ba0",
+        "OwnerId": "908252070469"
+    },
+    "ClientToken": "d394355a-cff3-47f7-b6f2-8baed0d406d4"
+}
+
+mohammad@mohammad:~$ PUBLIC_RT="rtb-09791a6ac19499fb5"
+mohammad@mohammad:~$ aws ec2 create-route \
+>   --route-table-id $PUBLIC_RT \
+>   --destination-cidr-block 0.0.0.0/0 \
+>   --gateway-id $IGW_ID
+{
+    "Return": true
+}
+mohammad@mohammad:~$ aws ec2 associate-route-table --route-table-id $PUBLIC_RT --subnet-id $PUBLIC_1A
+{
+    "AssociationId": "rtbassoc-0ead2b76d18a4c16e",
+    "AssociationState": {
+        "State": "associated"
+    }
+}
+mohammad@mohammad:~$ aws ec2 associate-route-table --route-table-id $PUBLIC_RT --subnet-id $PUBLIC_1B
+{
+    "AssociationId": "rtbassoc-055de377ade52c0f0",
+    "AssociationState": {
+        "State": "associated"
+    }
+}
+mohammad@mohammad:~$ aws ec2 create-route-table \
+>   --vpc-id $VPC_ID \
+>   --tag-specifications 'ResourceType=route-table,Tags=[{Key=Name,Value=private-rt}]'
+{
+    "RouteTable": {
+        "Associations": [],
+        "PropagatingVgws": [],
+        "RouteTableId": "rtb-0586dcdaf0071f25c",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "private-rt"
+            }
+        ],
+        "VpcId": "vpc-002de9774c3611ba0",
+        "OwnerId": "908252070469"
+    },
+    "ClientToken": "3c5c8573-3aa5-4453-adc8-4d556f69a8ef"
+:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    "RouteTable": {
+        "Associations": [],
+        "PropagatingVgws": [],
+        "RouteTableId": "rtb-0586dcdaf0071f25c",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ],
+        "Tags": [
+            {
+                "Key": "Name",
+                "Value": "private-rt"
+            }
+        ],
+        "VpcId": "vpc-002de9774c3611ba0",
+        "OwnerId": "908252070469"
+    },
+    "ClientToken": "3c5c8573-3aa5-4453-adc8-4d556f69a8ef"
+:
+
+mohammad@mohammad:~$ PRIVATE_RT="rtb-0586dcdaf0071f25c"
+mohammad@mohammad:~$ aws ec2 associate-route-table --route-table-id $PRIVATE_RT --subnet-id $PRIVATE_1A
+{
+    "AssociationId": "rtbassoc-0ec3c4300bc1ec3fd",
+    "AssociationState": {
+        "State": "associated"
+    }
+}
+mohammad@mohammad:~$ aws ec2 associate-route-table --route-table-id $PRIVATE_RT --subnet-id $PRIVATE_1B
+{
+    "AssociationId": "rtbassoc-025d2caae60b36421",
+    "AssociationState": {
+        "State": "associated"
+    }
+}
+mohammad@mohammad:~$ aws ec2 describe-vpcs --filters "Name=tag:Name,Values=devops-vpc"
+{
+    "Vpcs": [
+        {
+            "OwnerId": "908252070469",
+            "InstanceTenancy": "default",
+            "CidrBlockAssociationSet": [
+                {
+                    "AssociationId": "vpc-cidr-assoc-01b4f17e0ebcaa21e",
+                    "CidrBlock": "10.0.0.0/16",
+                    "CidrBlockState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "devops-vpc"
+                }
+            ],
+            "BlockPublicAccessStates": {
+                "InternetGatewayBlockMode": "off"
+:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    "Vpcs": [
+        {
+            "OwnerId": "908252070469",
+            "InstanceTenancy": "default",
+            "CidrBlockAssociationSet": [
+                {
+                    "AssociationId": "vpc-cidr-assoc-01b4f17e0ebcaa21e",
+                    "CidrBlock": "10.0.0.0/16",
+                    "CidrBlockState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "devops-vpc"
+                }
+            ],
+            "BlockPublicAccessStates": {
+                "InternetGatewayBlockMode": "off"
+:
+ 
+mohammad@mohammad:~$ aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" \
+>   --query "Subnets[*].{Name:Tags[?Key=='Name']|[0].Value,CIDR:CidrBlock,AZ:AvailabilityZone}" \
+>   --output table
+----------------------------------------------
+|               DescribeSubnets              |
++-------------+---------------+--------------+
+|     AZ      |     CIDR      |    Name      |
++-------------+---------------+--------------+
+|  ap-south-1a|  10.0.2.0/24  |  private-1a  |
+|  ap-south-1b|  10.0.4.0/24  |  private-1b  |
+|  ap-south-1a|  10.0.1.0/24  |  public-1a   |
+|  ap-south-1b|  10.0.3.0/24  |  public-1b   |
++-------------+---------------+--------------+
+mohammad@mohammad:~$ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=$VPC_ID" \
+>   --query "RouteTables[*].{Name:Tags[?Key=='Name']|[0].Value,Routes:Routes}" \
+>   --output json
+[
+    {
+        "Name": null,
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "Name": "public-rt",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "igw-0daed874da2bb4a7e",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "Name": "private-rt",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ]
+    }
+]
+(END)
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "igw-0daed874da2bb4a7e",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "Name": "private-rt",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ]
+    }
+]
+(END)
+
+mohammad@mohammad:~$ aws ec2 describe-vpcs --filters "Name=tag:Name,Values=devops-vpc"
+{
+    "Vpcs": [
+        {
+            "OwnerId": "908252070469",
+            "InstanceTenancy": "default",
+            "CidrBlockAssociationSet": [
+                {
+                    "AssociationId": "vpc-cidr-assoc-01b4f17e0ebcaa21e",
+                    "CidrBlock": "10.0.0.0/16",
+                    "CidrBlockState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "devops-vpc"
+                }
+            ],
+            "BlockPublicAccessStates": {
+                "InternetGatewayBlockMode": "off"
+            },
+            "VpcId": "vpc-002de9774c3611ba0",
+            "State": "available",
+            "CidrBlock": "10.0.0.0/16",
+            "DhcpOptionsId": "dopt-02c9a29994be9e011"
+        }
+    ]
+}
+(END)
+                    "AssociationId": "vpc-cidr-assoc-01b4f17e0ebcaa21e",
+                    "CidrBlock": "10.0.0.0/16",
+                    "CidrBlockState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "IsDefault": false,
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "devops-vpc"
+                }
+            ],
+            "BlockPublicAccessStates": {
+                "InternetGatewayBlockMode": "off"
+            },
+            "VpcId": "vpc-002de9774c3611ba0",
+            "State": "available",
+            "CidrBlock": "10.0.0.0/16",
+            "DhcpOptionsId": "dopt-02c9a29994be9e011"
+        }
+    ]
+}
+(END)
