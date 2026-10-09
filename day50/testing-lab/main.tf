@@ -120,3 +120,4 @@ module "s3" {
   project_name      = var.project_name
   enable_versioning = true
 }
+resource    "aws_s3_bucket"    "test" { bucket = "test" }
