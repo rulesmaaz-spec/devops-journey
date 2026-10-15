@@ -30,7 +30,7 @@ variable "project_name" {
 variable "ssh_allowed_cidr" {
   description = "CIDR block allowed to SSH"
   type        = string
-  default     = "0.0.0.0/0"   # Override with your IP
+  default     = "0.0.0.0/0" # Override with your IP
 
   validation {
     condition     = can(cidrhost(var.ssh_allowed_cidr, 0))
