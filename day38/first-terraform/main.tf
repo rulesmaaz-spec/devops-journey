@@ -112,7 +112,7 @@ resource "aws_instance" "web" {
   EOF
 
   tags = {
-    Name        = "${var.project_name}-web"
+    Name        = "${var.project_name}-web-server"
     Environment = "dev"
     ManagedBy   = "terraform"
   }

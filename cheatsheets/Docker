@@ -1,0 +1,252 @@
+DOCKER
+│
+├── 1. CORE CONCEPTS
+│   ├── Image
+│   │   ├── Read-only template
+│   │   ├── Built from Dockerfile
+│   │   ├── Composed of layers
+│   │   └── Stored in registry
+│   ├── Container
+│   │   ├── Running instance of image
+│   │   ├── Has writable layer on top
+│   │   ├── Isolated (filesystem, network, processes)
+│   │   └── Ephemeral by default
+│   ├── Registry
+│   │   ├── Docker Hub (public)
+│   │   ├── AWS ECR (private, AWS)
+│   │   ├── GitHub Container Registry
+│   │   └── Self-hosted (Harbor)
+│   └── Dockerfile
+│       ├── Instructions (FROM, RUN, COPY, CMD)
+│       ├── Layered build
+│       └── Multi-stage builds
+│
+├── 2. DOCKERFILE INSTRUCTIONS
+│   ├── FROM
+│   │   ├── Base image
+│   │   └── Multi-stage: AS builder
+│   ├── RUN
+│   │   ├── Executes during build
+│   │   └── Creates a layer
+│   ├── COPY / ADD
+│   │   ├── COPY: from host to image
+│   │   └── ADD: also handles URLs and tarballs
+│   ├── WORKDIR
+│   │   └── Sets working directory
+│   ├── ENV
+│   │   └── Environment variables at build time
+│   ├── ARG
+│   │   └── Build-time arguments (not persisted)
+│   ├── EXPOSE
+│   │   └── Documents port (doesn't publish)
+│   ├── USER
+│   │   └── Runs as non-root
+│   ├── CMD
+│   │   └── Default command (overridable)
+│   ├── ENTRYPOINT
+│   │   └── Fixed command (not overridable easily)
+│   └── HEALTHCHECK
+│       └── Defines health probe
+│
+├── 3. IMAGE MANAGEMENT
+│   ├── Build
+│   │   ├── docker build -t name:tag .
+│   │   ├── -f for custom Dockerfile
+│   │   └── --no-cache for clean build
+│   ├── List
+│   │   └── docker images
+│   ├── Inspect
+│   │   └── docker image inspect
+│   ├── Tag
+│   │   └── docker tag source:tag target:tag
+│   ├── Push / Pull
+│   │   ├── docker push name:tag
+│   │   └── docker pull name:tag
+│   ├── Remove
+│   │   ├── docker rmi image
+│   │   └── docker image prune
+│   └── Save / Load
+│       ├── docker save > file.tar
+│       └── docker load < file.tar
+│
+├── 4. CONTAINER MANAGEMENT
+│   ├── Lifecycle
+│   │   ├── docker run
+│   │   ├── docker start
+│   │   ├── docker stop
+│   │   ├── docker restart
+│   │   ├── docker pause / unpause
+│   │   └── docker rm
+│   ├── Inspection
+│   │   ├── docker ps (running)
+│   │   ├── docker ps -a (all)
+│   │   ├── docker inspect
+│   │   ├── docker logs
+│   │   └── docker stats
+│   ├── Interaction
+│   │   ├── docker exec -it container bash
+│   │   ├── docker attach
+│   │   └── docker cp (copy files in/out)
+│   └── Cleanup
+│       ├── docker container prune
+│       └── docker system prune -a
+│
+├── 5. NETWORKING
+│   ├── Drivers
+│   │   ├── bridge (default)
+│   │   ├── host (shares host network)
+│   │   ├── overlay (multi-host, Swarm)
+│   │   ├── macvlan (MAC address)
+│   │   └── none (isolated)
+│   ├── Default Bridge
+│   │   ├── No DNS resolution
+│   │   ├── IP-only communication
+│   │   └── Not recommended
+│   ├── User-Defined Bridge
+│   │   ├── Auto DNS by service name
+│   │   ├── Isolation
+│   │   └── Recommended
+│   ├── Port Mapping
+│   │   ├── -p host:container
+│   │   └── -p IP:host:container
+│   └── Commands
+│       ├── docker network create
+│       ├── docker network ls
+│       ├── docker network inspect
+│       ├── docker network connect
+│       └── docker network rm
+│
+├── 6. STORAGE
+│   ├── Volumes (named)
+│   │   ├── Managed by Docker
+│   │   ├── /var/lib/docker/volumes/
+│   │   └── Best for production
+│   ├── Bind Mounts
+│   │   ├── Host directory → container
+│   │   ├── Great for development
+│   │   └── Path-dependent
+│   ├── tmpfs
+│   │   └── In-memory, ephemeral
+│   ├── Commands
+│   │   ├── docker volume create
+│   │   ├── docker volume ls
+│   │   ├── docker volume inspect
+│   │   ├── docker volume rm
+│   │   └── docker volume prune
+│   └── Backup / Restore
+│       └── tar-based backup via temp container
+│
+├── 7. DOCKER COMPOSE
+│   ├── Purpose
+│   │   └── Multi-container apps on one host
+│   ├── File
+│   │   └── docker-compose.yml
+│   ├── Structure
+│   │   ├── services:
+│   │   ├── networks:
+│   │   ├── volumes:
+│   │   └── (version: — obsolete)
+│   ├── Service Config
+│   │   ├── build / image
+│   │   ├── ports
+│   │   ├── environment / env_file
+│   │   ├── volumes
+│   │   ├── depends_on
+│   │   ├── restart policy
+│   │   └── healthcheck
+│   ├── Commands
+│   │   ├── docker compose up -d
+│   │   ├── docker compose down
+│   │   ├── docker compose ps
+│   │   ├── docker compose logs -f
+│   │   ├── docker compose exec
+│   │   ├── docker compose build
+│   │   ├── docker compose push
+│   │   └── docker compose down -v
+│   └── Networks in Compose
+│       └── Auto-created <project>_default
+│
+├── 8. SECURITY
+│   ├── Non-root User
+│   │   └── USER appuser in Dockerfile
+│   ├── Image Scanning
+│   │   ├── Trivy
+│   │   ├── Docker Scout
+│   │   └── Snyk
+│   ├── Secrets
+│   │   ├── Environment vars (dev)
+│   │   ├── .env file (gitignored)
+│   │   ├── Docker secrets (Swarm)
+│   │   └── Never bake into image
+│   ├── Minimal Base Images
+│   │   ├── alpine
+│   │   ├── distroless
+│   │   └── scratch
+│   └── Best Practices
+│       ├── Read-only filesystem
+│       ├── Drop capabilities
+│       └── No privileged mode
+│
+├── 9. MULTI-STAGE BUILDS
+│   ├── Purpose
+│   │   ├── Smaller images
+│   │   ├── Fewer vulnerabilities
+│   │   └── Faster deployment
+│   ├── Pattern
+│   │   ├── Stage 1 (builder): compilers, deps
+│   │   └── Stage 2 (runtime): only essentials
+│   ├── Commands
+│   │   └── COPY --from=builder
+│   └── Example
+│       └── Python: build wheels → copy to slim
+│
+├── 10. DEBUGGING
+│   ├── Logs
+│   │   ├── docker logs <container>
+│   │   ├── -f (follow)
+│   │   ├── --tail N
+│   │   └── -t (timestamps)
+│   ├── Exec
+│   │   ├── docker exec -it <c> sh
+│   │   └── docker exec <c> env
+│   ├── Inspect
+│   │   ├── docker inspect <c>
+│   │   ├── -f '{{.State.Status}}'
+│   │   └── -f '{{.State.ExitCode}}'
+│   ├── Events
+│   │   └── docker events
+│   └── Stats
+│       └── docker stats
+│
+├── 11. HEALTHCHECKS
+│   ├── Dockerfile
+│   │   └── HEALTHCHECK CMD curl -f http://localhost
+│   ├── Compose
+│   │   └── healthcheck: test, interval, retries
+│   ├── Status
+│   │   └── healthy / unhealthy / starting
+│   └── Restart Policies
+│       ├── no
+│       ├── on-failure
+│       ├── always
+│       └── unless-stopped
+│
+└── 12. REGISTRIES
+    ├── Docker Hub
+    │   ├── Public (free)
+    │   ├── Private (1 free)
+    │   └── docker login → push/pull
+    ├── AWS ECR
+    │   ├── IAM-integrated
+    │   ├── Image scanning built-in
+    │   └── aws ecr get-login-password
+    ├── GitHub Container Registry
+    │   └── ghcr.io
+    ├── Tagging Strategy
+    │   ├── latest (avoid in prod)
+    │   ├── Semver (1.2.3)
+    │   ├── Commit hash (abc123f)
+    │   └── Date (2026-09-21)
+    └── Lifecycle
+        ├── Image retention policies
+        └── Vulnerability scanning
