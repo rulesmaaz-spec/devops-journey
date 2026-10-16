@@ -39,7 +39,7 @@ jobs:
       - name: Simulate build
         run: |
           echo "Building application..."
-          python3 app.py > build-output.txt
+          python3 testday52/app.py > build-output.txt
           echo "Build complete"
       - name: Upload artifact
         uses: actions/upload-artifact@v4
