@@ -15,9 +15,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install -r testday52/full-ci/requirements.txt
+        run: pip install -r full-ci/requirements.txt
       - name: Lint
-        run: flake8 testday52/full-ci/app.py testday52/full-ci/test_app.py --max-line-length=100
+        run: flake8 full-ci/app.py full-ci/test_app.py --max-line-length=100
 
   test:
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install -r testday52/full-ci/requirements.txt
+        run: pip install -r full-ci/requirements.txt
       - name: Test
         run: pytest -v
 
