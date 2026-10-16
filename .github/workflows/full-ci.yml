@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install -r testday52/ful-ci/requirements.txt
+        run: pip install -r testday52/full-ci/requirements.txt
       - name: Test
         run: pytest -v
 
