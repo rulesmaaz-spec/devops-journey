@@ -43,7 +43,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           cache: 'pip'
-      - run: pip install -r day53/production-pipeline/requirements.txt
+      - run: pip install -r day53/production-pipeline/requirements53.txt
       - run: pytest -v
 
   build:
