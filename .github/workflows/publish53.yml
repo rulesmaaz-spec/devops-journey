@@ -2,9 +2,12 @@ name: Publish53
 
 on:
   push:
-    branches: [main, master]
-    tags: ['v*']
-  workflow_dispatch:         # <-- Adds a manual "Run workflow" button
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,9 +16,8 @@ jobs:
   publish:
     name: Push to Docker Hub
     runs-on: ubuntu-latest
-#    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
-   steps:
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v') }}
+    steps:
       - uses: actions/checkout@v4
 
       - uses: docker/setup-buildx-action@v3
@@ -40,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: day53/production-pipeline
-          file: day53/production-pipeline/Dockerfil
+          file: day53/production-pipeline/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
