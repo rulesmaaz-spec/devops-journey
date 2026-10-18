@@ -4,6 +4,10 @@ on:
   push:
     branches: [main, master]
     tags: ['v*']
+  workflow_dispatch:         # <-- Adds a manual "Run workflow" button
+
+permissions:
+  contents: read
 
 jobs:
   publish:
