@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
+          cache-dependency-path: day53/production-pipeline/requirements53.txt # <-- Added this
       - run: pip install flake8
       - run: flake8 day53/production-pipeline/app53.py day53/production-pipeline/test_app53.py --max-line-length=100
 
@@ -43,9 +44,14 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           cache: 'pip'
-      - run: pip install -r day53/production-pipeline/requirements53.txt
-      - run: pytest day53/production-pipeline/ -v
-
+#      - run: pip install -r day53/production-pipeline/requirements53.txt
+#     - run: pytest day53/production-pipeline/ -v
+          cache-dependency-path: day53/production-pipeline/requirements53.txt
+      # Add this step 👇
+      - name: Install dependencies
+        run: pip install -r day53/production-pipeline/requirements53.txt
+      - name: Run tests
+        run: python -m pytest day53/production-pipeline/ -v --tb=short
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
