@@ -4,10 +4,10 @@ RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 USER appuser
 WORKDIR /home/appuser
 
-COPY --chown=appuser:appgroup requirements.txt .
+COPY --chown=appuser:appgroup requirements53.txt .
 RUN pip install --user --no-cache-dir -r requirements53.txt
 
-COPY --chown=appuser:appgroup app.py .
+COPY --chown=appuser:appgroup app53.py .
 ENV PATH=/home/appuser/.local/bin:$PATH
 
 EXPOSE 5000
