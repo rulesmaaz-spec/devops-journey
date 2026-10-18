@@ -44,7 +44,7 @@ jobs:
           python-version: ${{ matrix.python }}
           cache: 'pip'
       - run: pip install -r day53/production-pipeline/requirements53.txt
-      - run: pytest -v
+      - run: pytest day53/production-pipeline/ -v
 
   build:
     name: Build Docker Image
@@ -56,7 +56,8 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: day53/production-pipeline
+          file: day53/production-pipeline/Dockerfile
           push: false
           tags: ${{ env.IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha
