@@ -42,7 +42,7 @@ jobs:
             --build-arg APP_VERSION=${{ steps.version.outputs.value }} \
             -t ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.value }} \
             -t ${{ env.IMAGE_NAME }}:latest \
-            .
+            ${{ env.APP_DIR }}    # <-- MAKE SURE THIS IS HERE, NOT A DOT (.)
 
       - name: Save image as artifact
         run: |
