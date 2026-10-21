@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY: docker.io
   IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/cd-demo
+  APP_DIR: day54/cd-pipeline  # <-- ADDED THIS LINE
 
 jobs:
   # ============================================
@@ -25,6 +26,7 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
+          cache-dependency-path: ${{ env.APP_DIR }}/requirements54.txt # <-- ADDED THIS for cache to work
 
       - name: Install dependencies
         run: pip install -r day54/cd-pipeline/requirements54.txt
