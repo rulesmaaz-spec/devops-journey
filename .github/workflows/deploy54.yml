@@ -36,13 +36,14 @@ jobs:
         run: echo "value=$(date +%Y.%m.%d).${GITHUB_RUN_NUMBER}" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
-        run: |
-          docker build \
-            -f ${{ env.APP_DIR }}/Dockerfile54 \
-            --build-arg APP_VERSION=${{ steps.version.outputs.value }} \
-            -t ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.value }} \
-            -t ${{ env.IMAGE_NAME }}:latest \
-            ${{ env.APP_DIR }}    # <-- MAKE SURE THIS IS HERE, NOT A DOT (.)
+#        run: |
+ #         docker build \
+  #          -f ${{ env.APP_DIR }}/Dockerfile54 \
+   #         --build-arg APP_VERSION=${{ steps.version.outputs.value }} \
+    #        -t ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.value }} \
+     #       -t ${{ env.IMAGE_NAME }}:latest \
+      #      ${{ env.APP_DIR }}    # <-- MAKE SURE THIS IS HERE, NOT A DOT (.)
+        run: docker build -f ${{ env.APP_DIR }}/Dockerfile54 --build-arg APP_VERSION=${{ steps.version.outputs.value }} -t ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.value }} -t ${{ env.IMAGE_NAME }}:latest ${{ env.APP_DIR }}
 
       - name: Save image as artifact
         run: |
