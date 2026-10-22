@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "gitops_demo" {
-  bucket = "gitops-demo-mohammad-2026-12345" # Make sure this is unique!
+  bucket = "gitops-demo-mohammad-oct22-999" # Make sure this is unique!
 
   tags = {
     Environment = "dev"
