@@ -1,0 +1,60 @@
+pipeline {
+    agent { docker { image 'python:3.11-slim' } }
+    
+    environment {
+        DOCKER_REGISTRY = "mohammad1maaz"
+        IMAGE_NAME = "myapp"
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // In real life: git 'https://github.com/...'
+                echo 'Checking out code...'
+            }
+        }
+        
+        stage('Lint') {
+            steps {
+                echo 'Installing linters...'
+                sh 'apt-get update && apt-get install -y flake8'
+                sh 'echo "Lint passed (simulated)"'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'echo "Tests passed (simulated)"'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building image...'
+                sh 'echo "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:$BUILD_NUMBER ."'
+            }
+        }
+        
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying...'
+                sh 'echo "kubectl apply -f k8s/staging/"'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo '✅ Pipeline completed successfully!'
+        }
+        failure {
+            echo '❌ Pipeline failed!'
+        }
+        always {
+            echo "Build number: ${env.BUILD_NUMBER}"
+            echo "Job: ${env.JOB_NAME}"
+            echo "URL: ${env.BUILD_URL}"
+        }
+    }
+}
