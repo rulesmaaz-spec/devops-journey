@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+
+    environment {
+        // Global variables available to all stages
+        APP_NAME = 'my-web-app'
+        DOCKER_REGISTRY = 'mohammad1maaz'
+    }
+
+    stages {
+        // Stage 1: Lint & Test in PARALLEL
+        stage('Quality Checks') {
+            parallel {
+                stage('Lint') {
+                    steps {
+                        echo "Running linters..."
+                        sh 'echo "Lint passed"'
+                    }
+                }
+                stage('Unit Tests') {
+                    steps {
+                        echo "Running unit tests..."
+                        sh 'echo "Tests passed"'
+                    }
+                }
+            }
+        }
+
+        // Stage 2: Build (Only if tests passed)
+        stage('Build Image') {
+            steps {
+                echo "Building Docker image..."
+                sh 'echo "docker build -t ${DOCKER_REGISTRY}/${APP_NAME}:${BUILD_NUMBER} ."'
+            }
+        }
+
+        // Stage 3: Deploy to Staging (Only on 'main' branch)
+        stage('Deploy to Staging') {
+            when {
+                branch 'main' // Only run this stage if branch is main
+            }
+            steps {
+                echo "Deploying to staging..."
+                sh 'echo "kubectl apply -f k8s/staging"'
+            }
+        }
+
+        // Stage 4: Deploy to Production (Requires Manual Approval)
+        stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                // Pauses the pipeline and waits for a human to click "Proceed"
+                input message: 'Deploy to production?', ok: 'Deploy'
+                
+                echo "Deploying to production..."
+                sh 'echo "kubectl apply -f k8s/prod"'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished."
+        }
+        success {
+            echo "✅ All stages passed!"
+        }
+        failure {
+            echo "❌ Something failed. Check the logs."
+        }
+    }
+}
