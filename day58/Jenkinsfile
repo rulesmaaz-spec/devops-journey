@@ -1,0 +1,68 @@
+pipeline {
+    // We need an agent with both Docker and AWS CLI installed
+    agent any
+
+    environment {
+        AWS_REGION = 'ap-south-1'
+        ECR_REPO = '908252070469.dkr.ecr.ap-south-1.amazonaws.com/devops-journey-app'
+        IMAGE_TAG = "${BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checking out code..."
+                // In a real job: git 'https://github.com/rulesmaaz-spec/devops-journey.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo "Building image..."
+                sh 'docker build -t ${ECR_REPO}:${IMAGE_TAG} -t ${ECR_REPO}:latest ./app'
+            }
+        }
+
+        stage('Push to AWS ECR') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-ecr-credentials',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                    script {
+                        echo "Logging into AWS ECR..."
+                        sh '''
+                            aws ecr get-login-password --region ${AWS_REGION} \
+                            | docker login --username AWS --password-stdin ${ECR_REPO}
+                            
+                            echo "Pushing image..."
+                            docker push ${ECR_REPO}:${IMAGE_TAG}
+                            docker push ${ECR_REPO}:latest
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                echo "Deploying to production server..."
+                // In a real job, you would use SSH or AWS CodeDeploy here:
+                // sh 'ssh ubuntu@13.125.x.x "docker pull ${ECR_REPO}:${IMAGE_TAG} && docker run -d -p 80:5000 ${ECR_REPO}:${IMAGE_TAG}"'
+                
+                echo "Simulating deployment: Connected to EC2, pulled image ${IMAGE_TAG}, restarted container."
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment of build ${BUILD_NUMBER} succeeded!"
+        }
+        failure {
+            echo "❌ Build failed."
+        }
+    }
+}
