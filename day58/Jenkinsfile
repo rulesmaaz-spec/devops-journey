@@ -12,14 +12,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checking out code..."
-                // In a real job: git 'https://github.com/rulesmaaz-spec/devops-journey.git'
+                git 'https://github.com/rulesmaaz-spec/devops-journey.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 echo "Building image..."
-                sh 'docker build -t ${ECR_REPO}:${IMAGE_TAG} -t ${ECR_REPO}:latest ./app'
+                sh 'docker build -t ${ECR_REPO}:${IMAGE_TAG} -t ${ECR_REPO}:latest ./day58/app'
             }
         }
 
@@ -49,7 +49,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 echo "Deploying to production server..."
-                // In a real job, you would use SSH or AWS CodeDeploy here:
+                // In a real job, we would use SSH or AWS CodeDeploy here:
                 // sh 'ssh ubuntu@13.125.x.x "docker pull ${ECR_REPO}:${IMAGE_TAG} && docker run -d -p 80:5000 ${ECR_REPO}:${IMAGE_TAG}"'
                 
                 echo "Simulating deployment: Connected to EC2, pulled image ${IMAGE_TAG}, restarted container."
