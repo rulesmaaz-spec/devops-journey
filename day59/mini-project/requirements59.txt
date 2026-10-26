@@ -1,2 +1,6 @@
 flask==3.0.0
 gunicorn==23.0.0
+# Add these to fix the reported CVEs
+setuptools>=78.1.1
+urllib3>=2.8.0
+msgpack>=1.2.1
