@@ -1,6 +1,6 @@
-flask==3.0.0
+flask==3.0.3
 gunicorn==23.0.0
-# Add these to fix the reported CVEs
-setuptools>=78.1.1
-urllib3>=2.8.0
-msgpack>=1.2.1
+# Explicitly pin safe versions for transitive dependencies
+setuptools==78.1.1
+urllib3==2.8.0
+msgpack==1.2.1
