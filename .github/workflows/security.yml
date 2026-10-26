@@ -2,7 +2,7 @@ name: DevSecOps Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [master,main]
   pull_request:
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -40,7 +40,7 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit
-        run: bandit -r . -x ./tests,./venv
+        run: bandit -r day59/mini-project -x ./tests,./venv
         # -r: recursive, -x: exclude test folders and virtual environments
 
   # ============================================
@@ -54,7 +54,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Docker Image
-        run: docker build -t my-secure-app:latest .
+        run: |
+          docker build \
+            -f day59/mini-project/Dockerfile59 \
+            -t my-secure-app:latest \
+            day59/mini-project
 
       - name: Run Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
