@@ -1,0 +1,35 @@
+---
+
+- name: Configure EC2 web server
+  hosts: ec2
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Deploy a custom index page
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <h1>Managed by Ansible</h1>
+          <p>Host: {{ inventory_hostname }}</p>
+          <p>IP: {{ ansible_host }}</p>
+        mode: '0644'
+
+    - name: Show public IP for browser test
+      debug:
+        msg: "Open http://{{ ansible_host }}/ in your browser"

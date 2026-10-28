@@ -1,0 +1,30 @@
+---
+- name: Configure Web Server
+  hosts: webservers
+  become: yes  # This means "run as root/sudo"
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create a custom index.html
+      copy:
+        content: "<h1>Configured by Ansible!</h1>"
+        dest: /var/www/html/index.html
+
+    - name: Restart Nginx to apply changes
+      service:
+        name: nginx
+        state: restarted
