@@ -1,0 +1,19 @@
+---
+# tasks file for webserver
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Deploy index.html from template
+  template:
+    src: index.html.j2  # Ansible automatically looks in the templates/ folder!
+    dest: /var/www/html/index.html
+  notify: Restart Nginx
+
+- name: Ensure Nginx is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes
