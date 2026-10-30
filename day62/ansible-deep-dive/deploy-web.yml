@@ -1,0 +1,33 @@
+---
+- name: Deploy Dynamic Web Server
+  hosts: localhost
+  become: yes
+
+  vars:
+    project_name: "DevOps Journey"
+    environment: "development"
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Deploy index.html from template
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+      notify: Restart Nginx   # <--- Notifies the handler
+
+    - name: Ensure Nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
