@@ -1,11 +1,11 @@
 ---
 - name: Deploy Dynamic Web Server
-  hosts: localhost
+  hosts: webservers
   become: yes
 
   vars:
     project_name: "DevOps Journey"
-    environment: "development"
+   # environment: "development"
 
   tasks:
     - name: Install Nginx
@@ -25,6 +25,10 @@
         name: nginx
         state: started
         enabled: yes
+
+    - name: Show which environment this server is
+      debug:
+        msg: "This server is in the {{ app_env }} environment"
 
   handlers:
     - name: Restart Nginx
