@@ -7,12 +7,19 @@
 #    - webserver  # <--- This is where the magic happens
 
 
-- name: Configure Web Servers
+#- name: Configure Web Servers
+#  hosts: localhost
+#  become: yes
+#  
+#  roles:
+#    - role: webserver
+#      vars:
+#        project_name: "Production App"
+#        env_name: "prod"
+---
+- name: Configure the Server
   hosts: localhost
   become: yes
-  
-  roles:
-    - role: webserver
-      vars:
-        project_name: "Production App"
-        env_name: "prod"
+
+  role: role
+

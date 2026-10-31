@@ -1,0 +1,11 @@
+---
+# tasks file for common
+- name: Install Common CLI Packages
+  apt:
+    name:
+      - curl
+      - vim
+      - htop
+    state: present
+    update_cache: yes
+

@@ -1,0 +1,5 @@
+# defaults file for server
+---
+project_name: "My Awesome App"
+environment: "development"
+http_port: 80
