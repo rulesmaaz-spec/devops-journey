@@ -1,0 +1,3 @@
+app_name: "MyApp"
+db_user: "Admin"
+db_pass: "this-is-my-password"
