@@ -1,0 +1,8 @@
+---
+- name: Configure Web Servers
+  hosts: role_webserver  # <--- Targeting the dynamic group!
+  become: yes
+  
+  roles:
+    - webserver  # From Day 63
+

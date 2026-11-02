@@ -1,0 +1,29 @@
+---
+plugin: amazon.aws.aws_ec2
+regions:
+  - ap-south-1   # Your AWS region
+
+# Filter: Only look at running instances
+filters:
+  instance-state-name: running
+
+# Group servers based on their 'Role' tag
+keyed_groups:
+  - key: tags.Role
+    prefix: role
+  - key: tags.Environment
+    prefix: env
+
+# Use the public IP as the hostname for SSH
+hostnames:
+  - ip-address
+
+# Optional: Set the SSH user (Ubuntu AMIs use 'ubuntu')
+compose:
+  ansible_user: "'ubuntu'"
+
+# Optional: Path to your SSH private key
+# If you don't put this here, you can set it in group_vars
+# Note: This is insecure if committed to Git. We'll cover Vault tomorrow.
+# compose:
+#   ansible_ssh_private_key_file: "'~/.ssh/aws/devops-journey-key.pem'"
