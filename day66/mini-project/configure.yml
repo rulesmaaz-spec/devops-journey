@@ -1,0 +1,41 @@
+---
+- name: Configure Web Server
+  hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx, htop, and curl
+      apt:
+        name:
+          - nginx
+          - htop
+          - curl
+        state: present
+
+    - name: Change Nginx default port from 80 to 8080
+      replace:
+        path: /etc/nginx/sites-available/default
+        regexp: 'listen (\[::\]:)?80'
+        replace: 'listen \g<1>8080'
+      notify: Restart Nginx
+
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create custom page
+      copy:
+        content: "<h1>Configured by Ansible via Terraform!</h1>"
+        dest: /var/www/html/index.html
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
