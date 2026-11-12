@@ -1,0 +1,24 @@
+1.    Create a PVC named postgres-pvc requesting 2Gi.
+
+2.    Create a Deployment for postgres:15-alpine.
+
+3.    Mount the PVC into the Postgres container at /var/lib/postgresql/data.
+
+4.    Add environment variables for POSTGRES_PASSWORD (use a ConfigMap or plain text for this lab).
+
+5.    Exec into the Postgres Pod and create a table:
+  
+  bash
+
+    kubectl exec -it <postgres-pod> -- psql -U postgres
+    # Inside psql:
+    CREATE TABLE users (id int, name varchar);
+    INSERT INTO users VALUES (1, 'Mohammad');
+    \q
+
+6.    Delete the Postgres Pod.
+
+7.    Wait for the Deployment to recreate the Pod.
+
+8.    Exec back into the new Pod and run SELECT * FROM users;. Your data will still be there!
+
