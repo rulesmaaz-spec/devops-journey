@@ -1,0 +1,10 @@
+replicaCount: 3
+
+image:
+  repository: taskmanager
+  pullPolicy: IfNotPresent
+  tag: "1.0"
+
+service:
+  type: ClusterIP
+  port: 5000
