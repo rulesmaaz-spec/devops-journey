@@ -1,0 +1,30 @@
+# --- NAMESPACE ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: microservices
+
+---
+# --- SECRET ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: microservices
+type: Opaque
+data:
+  # base64 encoded password: password123
+  POSTGRES_PASSWORD: cGFzc3dvcmQxMjM=
+
+---
+# --- CONFIGMAP ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: microservices
+data:
+  DB_HOST: "postgres"
+  DB_NAME: "tasks"
+  DB_USER: "postgres"
+  REDIS_HOST: "redis"
